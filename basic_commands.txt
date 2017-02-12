@@ -1,0 +1,11 @@
+python scripts/preprocess.py \
+--input_txt data/realdonaldtrump.txt \
+--output_h5 data/realdonaldtrump.h5 \
+--output_json data/realdonaldtrump.json
+
+th train.lua \
+-input_h5 data/realdonaldtrump.h5 \
+-input_json data/realdonaldtrump.json \
+-gpu -1
+
+th sample.lua -checkpoint cv/checkpoint_10000.t7 -length 150 -gpu -1
