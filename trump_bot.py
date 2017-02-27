@@ -26,8 +26,32 @@ def tweet(message):
     api = get_api(cfg)
     api.update_status(status=message)
 
+def build_status():
+    status = ''
+
+    while True:
+        sentence = ''
+
+        while '.' not in sentence:
+            sentence = query_rnn(120)
+
+        if len(sentence) + len(status) > 140:
+            break
+        else:
+            status += sentence.split('.')[0] + "."
+
+    return status
+
+def query_rnn(num_characters):
+    '''Syscall to get text from RNN'''
+    #TODO
+
+    return 'Hello World!.'
+
 def main():
-    tweet('Hello world!')
+
+    status = build_status()
+    tweet(status)
 
 if __name__ == '__main__':
     main()
