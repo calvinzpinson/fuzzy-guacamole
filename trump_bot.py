@@ -1,5 +1,7 @@
 import ConfigParser
 import tweepy
+import subprocess
+
 
 def get_config():
     config_parser = ConfigParser.ConfigParser()
@@ -33,7 +35,7 @@ def build_status():
         sentence = ''
 
         while '.' not in sentence:
-            sentence = query_rnn(120)
+            sentence = query_rnn(120).replace('\n', ' ')
 
         if len(sentence) + len(status) > 140:
             break
@@ -44,14 +46,19 @@ def build_status():
 
 def query_rnn(num_characters):
     '''Syscall to get text from RNN'''
-    #TODO
+    
+    command = 'th sample.lua -checkpoint cv/checkpoint_10000.t7 -length ' + num_characters + ' -gpu -1'
+    p = subprocess.Popen(command, stdout=subprocess.PIPE)
+    output, err = p.communicate()
 
-    return 'Hello World!.'
+    return output
+    #return 'Hello World!.'
 
 def main():
 
     status = build_status()
-    tweet(status)
+    print status
+    #tweet(status)
 
 if __name__ == '__main__':
     main()
