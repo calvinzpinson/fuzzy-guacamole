@@ -48,18 +48,17 @@ def build_status():
 def query_rnn(num_characters):
     '''Syscall to get text from RNN'''
 
-    command = ['th', 'sample.lua', '-checkpoint', 'cv/checkpoint_10000.t7', '-length', str(num_characters), ' -gpu', '-1']
+    command = ['/root/torch/install/bin/th', 'sample.lua', '-checkpoint', 'cv/checkpoint_10000.t7', '-length', str(num_characters), ' -gpu', '-1']
     p = subprocess.Popen(command, cwd=os.getcwd(), stdout=subprocess.PIPE)
     output, err = p.communicate()
 
     return output
-    #return 'Hello World!.'
 
 def main():
-
+    
+    os.chdir('/root/torch-rnn/')
     status = build_status()
-    print status
-    #tweet(status)
+    tweet(status)
 
 if __name__ == '__main__':
     main()
