@@ -1,6 +1,7 @@
 import ConfigParser
 import tweepy
 import subprocess
+import os
 
 
 def get_config():
@@ -46,9 +47,9 @@ def build_status():
 
 def query_rnn(num_characters):
     '''Syscall to get text from RNN'''
-    
-    command = 'th sample.lua -checkpoint cv/checkpoint_10000.t7 -length ' + num_characters + ' -gpu -1'
-    p = subprocess.Popen(command, stdout=subprocess.PIPE)
+
+    command = ['th', 'sample.lua', '-checkpoint', 'cv/checkpoint_10000.t7', '-length', str(num_characters), ' -gpu', '-1']
+    p = subprocess.Popen(command, cwd=os.getcwd(), stdout=subprocess.PIPE)
     output, err = p.communicate()
 
     return output
